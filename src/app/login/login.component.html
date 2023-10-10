@@ -1,0 +1,77 @@
+<div class="container">
+	<!-- code here -->
+	<div class="card">
+		<div class="card-image">
+			<h2 class="card-heading">
+				Get started
+				<small>Let us create your account</small>
+			</h2>
+		</div>
+		<form class="card-form" [formGroup]="loginForm" autocomplete="off">
+			<div class="input">
+				<input type="text" class="input-field" name="fullName" formControlName="fullName"/>
+				<label class="input-label">Full name</label>
+			</div>
+			<div class="alert alert-danger" role="alert" *ngIf="fullName.touched && fullName.invalid">
+				<div *ngIf="fullName.errors?.required">The FullName is required</div>
+				<div *ngIf="fullName.errors?.minlength">The FullName is should be more than 3 characters</div>
+				<div *ngIf="fullName.errors?.maxlength">The FullName should be less than 25 characters</div>
+			</div>
+			<div class="input">
+				<input type="text" class="input-field" required formControlName="email"/>
+				<label class="input-label">Email</label>
+			</div>
+			<div class="alert alert-danger" role="alert" *ngIf="email.touched && email.invalid">
+				<div *ngIf="email.errors?.required">The email is required</div>
+				<div *ngIf="email.errors?.pattern">Please enter the valid email</div>
+			</div>
+			<div class="input">
+				<input type="text" class="input-field" required formControlName="mobile"/>
+				<label class="input-label">Mobile</label>
+			</div>
+			<div class="alert alert-danger" role="alert" *ngIf="mobile.touched && mobile.invalid">
+				<div *ngIf="mobile.errors?.required">The mobile is required</div>
+				<div *ngIf="mobile.errors?.maxlength">The mobile is should be 10 characters</div>
+				<div *ngIf="mobile.errors?.minlength">The mobile is should be 10 characters</div>
+				<div *ngIf="mobile.errors?.pattern">Please enter the valid mobile number</div>
+
+			</div>
+			<div class="row mt-5">
+				<div class="col-sm-3" *ngFor="let genders of sex">
+					<div class="form-outline mb-4">
+						<input type="radio" class="form-check-input" id="form1Example1" name="gender" value="{{genders}}" formControlName="gender">
+						<label class="form-label" for="form1Example1" style="font-size: 15px;padding: 5px;">{{genders}}</label>
+					</div>
+				</div>
+			</div>
+			<div class="action">
+				<button class="action-button" (click)="loginSubmit()" [disabled]="OtpPopup || loginForm.invalid">Get started</button>
+			</div>
+		</form>
+		<div class="card-info">
+			<p>By signing up you are agreeing to our <a href="#">Terms and Conditions</a></p>
+		</div>
+	</div>
+</div>
+
+<div class="container" id="otpverification" *ngIf="OtpPopup">
+	<div class="row justify-content-md-center">
+		<div class="col-md-4 text-center">
+			<div class="row">
+				<div class="col-sm-12 mt-5 bgWhite">
+					<div class="title">
+						Verify OTP
+					</div>
+					<form [formGroup]="otpForm" class="mt-5">
+						<input type="text" name="otp" formControlName="otpNumber">
+						
+					<hr class="mt-4">
+					<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
+						(click)="otpValidation()" >Verify</button>
+					<button class='btn btn-primary btn-block mt-4 mb-4 customBtn' (click)="OtpCancel()">Cancel</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

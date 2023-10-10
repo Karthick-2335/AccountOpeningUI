@@ -1,0 +1,173 @@
+<!-- Header -->
+<header class="bg-surface-primary border-bottom pt-6">
+  <div class="container-fluid">
+    <div class="mb-npx">
+      <div class="row align-items-center">
+        <div class="col-sm-6 col-12 mb-4 mb-sm-0">
+          <!-- Title -->
+          <h1 class="h2 mb-0 ls-tight">Product</h1>
+        </div>
+        <!-- Actions -->
+        <div class="col-sm-6 col-12 text-sm-end">
+          <div class="mx-n1">
+            <a href="#" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
+              <span class=" pe-2">
+                <i class="bi bi-pencil"></i>
+              </span>
+              <span>Edit</span>
+            </a>
+            <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
+              <span class=" pe-2">
+                <i class="bi bi-plus"></i>
+              </span>
+              <span>Create</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Nav -->
+      <ul class="nav nav-tabs mt-4 overflow-x border-0">
+
+      </ul>
+    </div>
+  </div>
+</header>
+<!-- Main -->
+<main class="py-6 bg-surface-secondary">
+  <div class="container-fluid">
+    <div class="card shadow border-0">
+      <div class="card-header">
+        <div class="container" id="body">
+          <form>
+            <div class="row sip-content">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <p>Investment Type : <b>Equity SIP</b></p>
+                  </div>
+                  <div class="col-sm-4">
+                    <p>Frquency : <b>Monthly</b></p>
+                  </div>
+                  <div class="col-sm-4">
+                    <p>Start Date : <b>Next trading date once your account is enabled for trading</b></p>
+                  </div>
+                </div>
+                <div class="checkBoxList d-flex">
+                  No.Of Months :
+                  <div class="form-check" *ngFor="let month of NoOfMonth">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault1" value="{{month}}"
+                      (change)="onRadioChange($event)" [checked]="month === selectedMonth">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      {{month}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-12" *ngFor="let SIP of SIPBucket">
+                <div class="card" (click)="cardClick(SIP.ID)">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-9">
+                        <input type="text" value="{{SIP.ID}}" hidden>
+                        <h3 class="card-title"><b>{{SIP.Basket_name}}</b></h3>
+                        <p class="card-text mt-4">{{SIP.Onelinertext}}</p>
+                        <div class="imageCollection d-flex align-items-center">
+                          Stock Invested :
+                          <img *ngFor="let stock of SIP.StockList" [src]="stock.Imagepath" alt="" width="50">
+                        </div>
+                      </div>
+                      <div class="col-sm-3 text-center">
+                        <h6 class="colorTag"><b>{{SIP.Nudgeline1}}</b></h6>
+                        <h3 class="p-3"><b>{{SIP.Base_Value}}</b></h3>
+                        <p>{{SIP.Nudgeline2}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="SIPStock" *ngIf="popUp">
+              <div class="card" *ngFor="let Stock of StockBucket">
+                <div class="card-header">
+                  <div class="cardTop">
+                    <div class="cardHeader d-flex justify-content-between">
+                      <h3><b>{{Stock.Basket_name}}</b></h3>
+                      <input type="text" value="{{Stock.ID}}" id="StockId" hidden>
+                      <button class="close" (click)="close()">X</button>
+                    </div>
+                    <div class="cardValue d-flex mt-3">
+                      <p class="mt-3">Total Investment Amount: </p>
+                      <button class="onClickPlus" (click)="allStockPlus(Stock.ID)">+</button>
+                      <input type="text" class="text-center" value="{{Stock.Base_Value}}"
+                        style="border: none;width: 70px;">
+                      <button class="onClickMinus" (click)="allStockMinus(Stock.ID)">-</button>
+                    </div>
+                    <p class="mt-3">You can opt for multiple lots of the basket by simply clicking on + against Total
+                      investment
+                      amount or customize Quatintiy in any stock as you like</p>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <table class="table table-responsive">
+                    <thead>
+                      <tr>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Quatintiy</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Exchange</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let stockBunch of Stock.StockList">
+                      <tr>
+                        <td><img [src]="stockBunch.Imagepath" alt="" width="50"><span>{{stockBunch.stockName}}</span>
+                        </td>
+                        <td>
+                          <div class="stockValue d-flex justify-content-between">
+                            <button class="onClickPlus"
+                              (click)="eachStockPlus(stockBunch.scripid,stockBunch.Basket_id)">+</button>
+                            <input type="text" class="text-center" value="{{stockBunch.qty}}"
+                              style="border: none;width: 60px;">
+                            <button class="onClickMinus"
+                              (click)="eachStockMinus(stockBunch.scripid,stockBunch.Basket_id)">-</button>
+                          </div>
+                        </td>
+                        <td>
+                          <p>{{stockBunch.price}}</p>
+                        </td>
+                        <td>
+                          <p>{{stockBunch.totalPrice}}</p>
+                        </td>
+                        <td>
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">BSE</label>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card-footer">
+                  <p>*Prices are as of 15 minutes ago and your basket amount will be as per preices when your orders a
+                    sent to
+                    Exchange</p>
+                  <input type="checkbox" name="termsandcondtions" (click)="acceptTermsandCond()"> I accept <a
+                    herf="">Terms &
+                    Conditions</a>
+                </div>
+                <div class="investBtn d-flex justify-content-center">
+                  <button class="btn btn-primary invest" (click)="investNow()" [disabled]="!termsandcondition">Invest
+                    Now</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <button class="btn btn-primary mt-5">Proceed</button>
+      </div>
+    </div>
+  </div>
+</main>

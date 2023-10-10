@@ -1,0 +1,19 @@
+input {
+    height: 65px;
+    border: 0.5px solid black !important;
+}
+
+select {
+    height: 65px;
+    border: 0.5px solid black !important;
+}
+
+button {
+    width: 200px;
+    height: 60px;
+}
+
+.form-check-input {
+    width: 25px;
+    height: 25px;
+}
