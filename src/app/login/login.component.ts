@@ -65,6 +65,8 @@ export class LoginComponent {
     this.validateOtp.email = this.loginForm.value.email;
     this.validateOtp.otp = this.otpForm.value.otpNumber;
     this.loginService.validateOtp(this.validateOtp).subscribe(resp => {
+      console.log(resp);
+      
       if(resp.success)
       {
         this.authenticated = 'true'
@@ -74,15 +76,13 @@ export class LoginComponent {
       }
       else
       {        
+        this.OtpPopup = false;
         Swal.fire({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          icon: 'success',
-          timerProgressBar : true,
-          timer: 5000,
-          title: resp.message
-        })
+          title: 'Error!',
+          text: resp.message,
+          icon: 'error',
+          confirmButtonText: 'Okay'
+        });
       }
     })
     
