@@ -34,6 +34,7 @@ export class LoginComponent {
     this.otpForm = fb.group({
       otpNumber : ['',[Validators.required,Validators.maxLength(4)]]
     })
+    localStorage.clear();
   }
 
   loginSubmit()
@@ -53,12 +54,14 @@ export class LoginComponent {
           icon: 'error',
           confirmButtonText: 'Okay'
         });
+        this.loginForm.reset();
       }
     });
   }
   OtpCancel()
   {
     this.OtpPopup = false;
+    this.loginForm.reset();
   }
   otpValidation()
   {
@@ -70,9 +73,10 @@ export class LoginComponent {
       if(resp.success)
       {
         this.authenticated = 'true'
-        sessionStorage.setItem('authenticated','true')
+        localStorage.setItem('authenticated','true')
         this.router.navigateByUrl('/registration');
         this._sharedService.emitChange(this.authenticated);
+        localStorage.setItem('webToken',resp.token);
       }
       else
       {        
@@ -83,6 +87,8 @@ export class LoginComponent {
           icon: 'error',
           confirmButtonText: 'Okay'
         });
+        this.otpForm.reset();
+        this.OtpPopup = true;
       }
     })
     

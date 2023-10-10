@@ -26,7 +26,7 @@
 				<div *ngIf="email.errors?.pattern">Please enter the valid email</div>
 			</div>
 			<div class="input">
-				<input type="text" class="input-field" required formControlName="mobile"/>
+				<input type="text" class="input-field" required formControlName="mobile" maxlength="10"/>
 				<label class="input-label">Mobile</label>
 			</div>
 			<div class="alert alert-danger" role="alert" *ngIf="mobile.touched && mobile.invalid">
@@ -63,7 +63,7 @@
 						Verify OTP
 					</div>
 					<form [formGroup]="otpForm" class="mt-5">
-						<input type="text" name="otp" formControlName="otpNumber">
+						<input type="text" class="input-field text-center" name="otp" formControlName="otpNumber" maxlength="4">
 						
 					<hr class="mt-4">
 					<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'

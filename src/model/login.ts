@@ -13,4 +13,5 @@ export class Validation{
 export class response {
     success:string;
     message : string;
+    token : string;
 }

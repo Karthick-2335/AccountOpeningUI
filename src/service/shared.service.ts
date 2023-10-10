@@ -14,7 +14,7 @@ export class SharedService {
   changeEmitted$ = this.emitChangeSource.asObservable();
   // Service message commands
   emitChange(change: any) {
-   let value = sessionStorage.setItem('authenticated',change)
+   let value = localStorage.setItem('authenticated',change)
       this.emitChangeSource.next(value);
   }
 }

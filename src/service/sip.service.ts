@@ -15,7 +15,7 @@ export class SipService {
 
   getAll():Observable<response>
   {
-    return this.http.get<response>(this.url);
+    return this.http.get<response>(this.url + "product");
   }
   postSip(SIPBasket:SIPBasket):Observable<SIPBasket>{
     return this.http.post<SIPBasket>(this.url + "product",SIPBasket);

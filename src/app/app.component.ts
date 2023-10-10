@@ -24,17 +24,17 @@ export class AppComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    if (sessionStorage.getItem('authenticated').toString() === null ? 'false' : 'true' === 'true') {
+    if (!!localStorage.getItem('authenticated')) {
       this.login = true;
     }
     else {
-      sessionStorage.clear();
+      localStorage.clear();
       this.router.navigateByUrl('');
     }
   }
   logOut() {
-    sessionStorage.clear();
     this.login = false;
     this.router.navigateByUrl('');
+    localStorage.clear();
   }
 }
