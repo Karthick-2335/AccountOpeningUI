@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { response,SIPBasket } from 'src/model/sipModel';
+import { response, SIPBasket } from 'src/model/sipModel';
 import { environment } from '../../environment';
 
 @Injectable({
@@ -9,15 +9,14 @@ import { environment } from '../../environment';
 })
 export class SipService {
 
-  private readonly url:string = environment.baseUrl
+  private readonly url: string = environment.baseUrl
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getAll():Observable<response>
-  {
+  getAll(): Observable<response> {
     return this.http.get<response>(this.url + "product");
   }
-  postSip(SIPBasket:SIPBasket):Observable<SIPBasket>{
-    return this.http.post<SIPBasket>(this.url + "product",SIPBasket);
+  postSip(SIPBasket: SIPBasket): Observable<SIPBasket> {
+    return this.http.post<SIPBasket>(this.url + "product", SIPBasket);
   }
 }

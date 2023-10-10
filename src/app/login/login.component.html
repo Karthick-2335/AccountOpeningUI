@@ -9,7 +9,7 @@
 		</div>
 		<form class="card-form" [formGroup]="loginForm" autocomplete="off">
 			<div class="input">
-				<input type="text" class="input-field" name="fullName" formControlName="fullName"/>
+				<input type="text" class="input-field" name="fullName" formControlName="fullName" />
 				<label class="input-label">Full name</label>
 			</div>
 			<div class="alert alert-danger" role="alert" *ngIf="fullName.touched && fullName.invalid">
@@ -18,7 +18,7 @@
 				<div *ngIf="fullName.errors?.maxlength">The FullName should be less than 25 characters</div>
 			</div>
 			<div class="input">
-				<input type="text" class="input-field" required formControlName="email"/>
+				<input type="text" class="input-field" required formControlName="email" />
 				<label class="input-label">Email</label>
 			</div>
 			<div class="alert alert-danger" role="alert" *ngIf="email.touched && email.invalid">
@@ -26,7 +26,7 @@
 				<div *ngIf="email.errors?.pattern">Please enter the valid email</div>
 			</div>
 			<div class="input">
-				<input type="text" class="input-field" required formControlName="mobile" maxlength="10"/>
+				<input type="text" class="input-field" required formControlName="mobile" maxlength="10" />
 				<label class="input-label">Mobile</label>
 			</div>
 			<div class="alert alert-danger" role="alert" *ngIf="mobile.touched && mobile.invalid">
@@ -39,13 +39,16 @@
 			<div class="row mt-5">
 				<div class="col-sm-3" *ngFor="let genders of sex">
 					<div class="form-outline mb-4">
-						<input type="radio" class="form-check-input" id="form1Example1" name="gender" value="{{genders}}" formControlName="gender">
-						<label class="form-label" for="form1Example1" style="font-size: 15px;padding: 5px;">{{genders}}</label>
+						<input type="radio" class="form-check-input" id="form1Example1" name="gender"
+							value="{{genders}}" formControlName="gender">
+						<label class="form-label" for="form1Example1"
+							style="font-size: 15px;padding: 5px;">{{genders}}</label>
 					</div>
 				</div>
 			</div>
 			<div class="action">
-				<button class="action-button" (click)="loginSubmit()" [disabled]="OtpPopup || loginForm.invalid">Get started</button>
+				<button class="action-button" (click)="loginSubmit()" [disabled]="OtpPopup || loginForm.invalid">Get
+					started</button>
 			</div>
 		</form>
 		<div class="card-info">
@@ -63,12 +66,14 @@
 						Verify OTP
 					</div>
 					<form [formGroup]="otpForm" class="mt-5">
-						<input type="text" class="input-field text-center" name="otp" formControlName="otpNumber" maxlength="4">
-						
-					<hr class="mt-4">
-					<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
-						(click)="otpValidation()" >Verify</button>
-					<button class='btn btn-primary btn-block mt-4 mb-4 customBtn' (click)="OtpCancel()">Cancel</button>
+						<input type="text" class="input-field text-center" name="otp" formControlName="otpNumber"
+							maxlength="4">
+
+						<hr class="mt-4">
+						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
+							(click)="otpValidation()">Verify</button>
+						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
+							(click)="OtpCancel()">Cancel</button>
 					</form>
 				</div>
 			</div>

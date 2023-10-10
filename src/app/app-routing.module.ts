@@ -9,12 +9,12 @@ import { BankComponent } from './bank/bank.component';
 import { authGuard } from 'src/authGuard/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent,pathMatch:'full' },
-  { path: 'registration', component: RegistrationComponent ,canActivate:[authGuard] },
-  { path: 'profile', component: ProfileComponent ,canActivate:[authGuard]},
-  { path: 'product', component: ProductComponent ,canActivate:[authGuard]},
-  { path: 'document', component: DocumentComponent ,canActivate:[authGuard]},
-  { path: 'bank', component: BankComponent ,canActivate:[authGuard]}
+  { path: '', component: LoginComponent, pathMatch: 'full' },
+  { path: 'registration', component: RegistrationComponent, canActivate: [authGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'product', component: ProductComponent, canActivate: [authGuard] },
+  { path: 'document', component: DocumentComponent, canActivate: [authGuard] },
+  { path: 'bank', component: BankComponent, canActivate: [authGuard] }
 ];
 
 @NgModule({
