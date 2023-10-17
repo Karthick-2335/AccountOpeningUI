@@ -1,0 +1,11 @@
+.activeLink {
+    background: #6658d3;
+    border-radius: 30px !important;
+    cursor: pointer;
+    color: white !important;
+}
+.activeLink:hover {
+    background: #6658d3 !important;
+    border-radius: 30px !important;
+    color: white !important;
+}

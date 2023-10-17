@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { SipService } from 'src/service/sip.service';
-import { Basketdetails, SIPBasket, StockList } from 'src/model/sipModel';
+import { Basketdetails, SIPBasket, StockList } from 'src/model/request/sipModel';
 
 @Component({
   selector: 'app-product',
@@ -13,7 +13,7 @@ export class ProductComponent implements OnInit {
   StockBucket: any[] = [];
   NoOfMonth: any[] = [];
   selectedMonth: any;
-  termsandcondition: boolean;
+  termsandcondition: boolean = false;
   getBasketId : any;
   PostRequest : SIPBasket = new SIPBasket();
   Basketdetails: Basketdetails = new Basketdetails();
@@ -26,12 +26,12 @@ export class ProductComponent implements OnInit {
       .subscribe(resp => {
         for (let i = 0; i < resp.response.data.length; i++) {
           this.Basketdetails = {
-            Base_Value: resp.response.data[i]['Basketdetails'].Base_Value,
-            Basket_name: resp.response.data[i]['Basketdetails'].Basket_name,
-            ID: resp.response.data[i]['Basketdetails'].ID,
-            Nudgeline1: resp.response.data[i]['Basketdetails'].Nudgeline1,
-            Nudgeline2: resp.response.data[i]['Basketdetails'].Nudgeline2,
-            Onelinertext: resp.response.data[i]['Basketdetails'].Onelinertext,
+            Base_Value: resp.response.data[i].Base_Value,
+            Basket_name: resp.response.data[i].Basket_name,
+            ID: resp.response.data[i].ID,
+            Nudgeline1: resp.response.data[i].Nudgeline1,
+            Nudgeline2: resp.response.data[i].Nudgeline2,
+            Onelinertext: resp.response.data[i].Onelinertext,
             StockList: this.getStock(resp.response.data[i])
           }
           this.SIPBucket.push(this.Basketdetails)
@@ -45,7 +45,7 @@ export class ProductComponent implements OnInit {
     this.getSIP();
   }
 
-  getStock(arr) {
+  getStock(arr : any) {
     let StockArray = [];
     for (let j = 0; j < arr.StockList.length; j++) {
       if (arr.Basketdetails.ID === arr.StockList[j].Basket_id) {
@@ -65,7 +65,7 @@ export class ProductComponent implements OnInit {
     return StockArray
   }
 
-  cardClick(id) {
+  cardClick(id : number) {
     this.getBasketId = id;
     this.StockBucket = [];
     this.popUp = true;
@@ -76,7 +76,7 @@ export class ProductComponent implements OnInit {
     this.popUp = false;
     this.termsandcondition = false;
   }
-  async eachStockPlus(StockId, id) {
+  async eachStockPlus(StockId : number, id : number) {
     let basevalue = 0;
     const terminal = this.SIPBucket.filter(x => { return x.ID === id });
     terminal[0].StockList.forEach((element, index) => {
@@ -89,7 +89,7 @@ export class ProductComponent implements OnInit {
     terminal[0].Base_Value = basevalue.toFixed(1);
 
   }
-  eachStockMinus(StockId, id) {
+  eachStockMinus(StockId : number, id : number) {
     let basevalue = 0;
     const terminal = this.SIPBucket.filter(x => { return x.ID === id });
     terminal[0].StockList.forEach((element, index) => {
@@ -102,7 +102,7 @@ export class ProductComponent implements OnInit {
     terminal[0].Base_Value = Math.abs(basevalue).toFixed(1);
 
   }
-  allStockPlus(BasketId) {
+  allStockPlus(BasketId : number) {
     let basevalue = 0;
     const terminal = this.SIPBucket.filter(x => { return x.ID === BasketId });
     terminal[0].StockList.forEach((element, index) => {
@@ -112,7 +112,7 @@ export class ProductComponent implements OnInit {
     });
     terminal[0].Base_Value = Math.abs(basevalue).toFixed(1);
   }
-  allStockMinus(BasketId) {
+  allStockMinus(BasketId : number) {
     let basevalue = 0;
     const terminal = this.SIPBucket.filter(x => { return x.ID === BasketId });
     terminal[0].StockList.forEach((element, index) => {

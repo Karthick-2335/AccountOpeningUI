@@ -8,13 +8,20 @@ export class SharedService {
 
   constructor() { }
 
-  // Observable string sources
   private emitChangeSource = new Subject<any>();
-  // Observable string streams
+  private stageActive = new Subject<string>();
+
   changeEmitted$ = this.emitChangeSource.asObservable();
-  // Service message commands
+  stageEmitted$ = this.stageActive.asObservable();
+
+
   emitChange(change: any) {
    let value = localStorage.setItem('authenticated',change)
       this.emitChangeSource.next(value);
   }
+  stageChange(stage : string) {
+    localStorage.setItem('activeStage',stage)
+    this.stageActive.next(stage);
+  }
 }
+

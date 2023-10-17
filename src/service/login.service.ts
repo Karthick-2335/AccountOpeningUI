@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Login, Validation, response } from 'src/model/login';
+import { Login, Validation } from 'src/model/request/login';
+import { response } from 'src/model/response/responseModel';
 import { environment } from '../../environment';
 
 

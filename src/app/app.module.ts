@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProductComponent } from './product/product.component';
 import { DocumentComponent } from './document/document.component';
 import { BankComponent } from './bank/bank.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { BankComponent } from './bank/bank.component';
     ProfileComponent,
     ProductComponent,
     DocumentComponent,
-    BankComponent
+    BankComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,

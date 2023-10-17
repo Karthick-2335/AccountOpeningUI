@@ -10,17 +10,11 @@
                 <!-- Actions -->
                 <div class="col-sm-6 col-12 text-sm-end">
                     <div class="mx-n1">
-                        <a href="#" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
+                        <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
                             <span class=" pe-2">
                                 <i class="bi bi-pencil"></i>
                             </span>
                             <span>Edit</span>
-                        </a>
-                        <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
-                            <span class=" pe-2">
-                                <i class="bi bi-plus"></i>
-                            </span>
-                            <span>Create</span>
                         </a>
                     </div>
                 </div>
@@ -34,79 +28,75 @@
 </header>
 <!-- Main -->
 <main class="py-6 bg-surface-secondary">
-    <div class="container-fluid">
+    <div>
         <div class="card shadow border-0 mb-7">
             <div class="card-header">
-                <form style="width: 100%;">
+                <form style="width: 100%;" autocomplete="off" autocapitalize="characters" [formGroup]="registrationForm">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">Pan Number</label>
-                                <input type="email" id="form1Example1" class="form-control" />
+                                <input type="email" id="form1Example1" class="form-control text-uppercase" name="panNumber" formControlName="panNumber"/>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">Date of Birth</label>
-                                <input type="date" id="form1Example1" class="form-control" />
+                                <input type="date" id="form1Example1" class="form-control" name="dateOfBirth" formControlName="dateOfBirth" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">AddressLine1</label>
-                                <input type="email" id="form1Example1" class="form-control" />
+                                <input type="email" id="form1Example1" class="form-control text-uppercase" name="addressLine1" formControlName="addressLine1" />
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">AddressLine2</label>
-                                <input type="text" id="form1Example1" class="form-control" />
+                                <input type="text" id="form1Example1" class="form-control text-uppercase" name="addressLine2" formControlName="addressLine2"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">  
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">City</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>City</option>
-
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" formControlName="city" [disabled] = "!isPincodeEnabled">
+                                    <option *ngFor="let ct of cities" value="{{ct}}">{{ct}}</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">District</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>District</option>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" formControlName="district" [disabled] = "!isPincodeEnabled">
+                                    <option *ngFor="let dst of districts" value="{{dst}}">{{dst}}</option>
 
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">State</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>State</option>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" formControlName="state" [disabled] = "!isPincodeEnabled">
+                                    <option *ngFor="let ste of states" value="{{ste}}">{{ste}}</option>
 
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">Pincode</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>Pincode</option>
-
-                                </select>
+                                <input type="email" id="form1Example1" class="form-control text-uppercase" name="pinCode" formControlName="pinCode" (change)="pincodeChange($event)"/>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary mt-5">Proceed</button>
+                    <button class="btn btn-primary mt-5" (click)="registrationSubmit()">Proceed</button>
                 </form>
             </div>
         </div>

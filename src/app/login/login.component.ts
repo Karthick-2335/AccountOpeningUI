@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { SharedService } from 'src/service/shared.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from 'src/service/login.service';
-import { Validation } from 'src/model/login';
+import { Validation } from 'src/model/request/login';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -14,9 +14,11 @@ import Swal from 'sweetalert2'
 export class LoginComponent {
 
   OtpPopup: boolean = false;
+  resume : boolean = false;
   authenticated: String = '';
   loginForm: any;
   otpForm: any;
+  resumeForm : any;
   emailPattern: string = '[a-z0-9]+@[a-z]+\.[a-z]{2,3}';
   mobilePattern: string = '[0-9]'
   sex: any[] = ['Male', 'Female'];
@@ -33,6 +35,9 @@ export class LoginComponent {
     this.otpForm = fb.group({
       otpNumber: ['', [Validators.required, Validators.maxLength(4)]]
     })
+    this.resumeForm = fb.group({
+      panNumber : ['',[Validators.required]]
+    })
     localStorage.clear();
   }
 
@@ -46,7 +51,7 @@ export class LoginComponent {
         this.OtpPopup = false;
         Swal.fire({
           title: 'Error!',
-          text: resp.message,
+          text: resp.errorMessage,
           icon: 'error',
           confirmButtonText: 'Okay'
         });
@@ -67,15 +72,16 @@ export class LoginComponent {
       if (resp.success) {
         this.authenticated = 'true'
         localStorage.setItem('authenticated', 'true')
-        this.router.navigateByUrl('/registration');
         this._sharedService.emitChange(this.authenticated);
+        this.router.navigateByUrl('/registration');
         localStorage.setItem('webToken', resp.token);
+        localStorage.setItem('RefNumber',resp.referenceNumber);
       }
       else {
         this.OtpPopup = false;
         Swal.fire({
           title: 'Error!',
-          text: resp.message,
+          text: resp.errorMessage,
           icon: 'error',
           confirmButtonText: 'Okay'
         });
@@ -99,5 +105,20 @@ export class LoginComponent {
   }
   get otpNumber() {
     return this.loginForm.get('otpNumber');
+  }
+  get panNumber() {
+    return this.loginForm.get('panNumber');
+  }
+  resumeSubmit()
+  {
+
+  }
+  resumeCancel()
+  {
+    this.resume = false;
+  }
+  resumePopup()
+  {
+    this.resume = true;
   }
 }
