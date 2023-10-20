@@ -6,7 +6,7 @@ export class response
 export class SIPBasket
 {
   success:any; 
-  data :Basketdetails[] = [];
+  Basketdetails: Basketdetails[] = []
   NoOfMonths : any;
   selectMonth : any;
   successMessage : any;

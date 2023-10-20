@@ -10,17 +10,11 @@
         <!-- Actions -->
         <div class="col-sm-6 col-12 text-sm-end">
           <div class="mx-n1">
-            <a href="#" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
+            <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
               <span class=" pe-2">
                 <i class="bi bi-pencil"></i>
               </span>
               <span>Edit</span>
-            </a>
-            <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
-              <span class=" pe-2">
-                <i class="bi bi-plus"></i>
-              </span>
-              <span>Create</span>
             </a>
           </div>
         </div>
@@ -34,10 +28,10 @@
 </header>
 <!-- Main -->
 <main class="py-6 bg-surface-secondary">
-  <div class="container-fluid">
+  <div>
     <div class="card shadow border-0">
       <div class="card-header">
-        <div class="container" id="body">
+        <div id="body">
           <form>
             <div class="row sip-content">
               <div class="col-sm-12">
@@ -71,7 +65,7 @@
                     <div class="row">
                       <div class="col-sm-9">
                         <input type="text" value="{{SIP.ID}}" hidden>
-                        <h3 class="card-title"><b>{{SIP.Basket_name}}</b></h3>
+                        <h3 class="card-title"><b>{{SIP.Base_Value}}</b></h3>
                         <p class="card-text mt-4">{{SIP.Onelinertext}}</p>
                         <div class="imageCollection d-flex align-items-center">
                           Stock Invested :

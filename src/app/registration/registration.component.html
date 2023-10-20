@@ -31,18 +31,21 @@
     <div>
         <div class="card shadow border-0 mb-7">
             <div class="card-header">
-                <form style="width: 100%;" autocomplete="off" autocapitalize="characters" [formGroup]="registrationForm">
+                <form style="width: 100%;" autocomplete="off" autocapitalize="characters"
+                    [formGroup]="registrationForm">
                     <div class="row">
                         <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">Pan Number</label>
-                                <input type="email" id="form1Example1" class="form-control text-uppercase" name="panNumber" formControlName="panNumber"/>
+                                <input type="email" id="form1Example1" class="form-control text-uppercase"
+                                    name="panNumber" formControlName="panNumber" />
                             </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">Date of Birth</label>
-                                <input type="date" id="form1Example1" class="form-control" name="dateOfBirth" formControlName="dateOfBirth" />
+                                <input type="date" id="form1Example1" class="form-control" name="dateOfBirth"
+                                    formControlName="dateOfBirth" />
                             </div>
                         </div>
                     </div>
@@ -50,21 +53,24 @@
                         <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">AddressLine1</label>
-                                <input type="email" id="form1Example1" class="form-control text-uppercase" name="addressLine1" formControlName="addressLine1" />
+                                <input type="email" id="form1Example1" class="form-control text-uppercase"
+                                    name="addressLine1" formControlName="addressLine1" />
                             </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">AddressLine2</label>
-                                <input type="text" id="form1Example1" class="form-control text-uppercase" name="addressLine2" formControlName="addressLine2"/>
+                                <input type="text" id="form1Example1" class="form-control text-uppercase"
+                                    name="addressLine2" formControlName="addressLine2" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5">  
+                        <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">City</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" formControlName="city" [disabled] = "!isPincodeEnabled">
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    formControlName="city">
                                     <option *ngFor="let ct of cities" value="{{ct}}">{{ct}}</option>
                                 </select>
                             </div>
@@ -72,7 +78,8 @@
                         <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">District</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" formControlName="district" [disabled] = "!isPincodeEnabled">
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    formControlName="district">
                                     <option *ngFor="let dst of districts" value="{{dst}}">{{dst}}</option>
 
                                 </select>
@@ -83,7 +90,8 @@
                         <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">State</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" formControlName="state" [disabled] = "!isPincodeEnabled">
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    formControlName="state">
                                     <option *ngFor="let ste of states" value="{{ste}}">{{ste}}</option>
 
                                 </select>
@@ -92,7 +100,8 @@
                         <div class="col-sm-5">
                             <div class="form-outline mb-5">
                                 <label class="form-label" for="form1Example1">Pincode</label>
-                                <input type="email" id="form1Example1" class="form-control text-uppercase" name="pinCode" formControlName="pinCode" (change)="pincodeChange($event)"/>
+                                <input type="email" id="form1Example1" class="form-control text-uppercase"
+                                    name="pinCode" formControlName="pinCode" (change)="pincodeChange($event)" />
                             </div>
                         </div>
                     </div>

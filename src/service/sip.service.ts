@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { response, SIPBasket } from 'src/model/request/sipModel';
+import { SIPBasket } from 'src/model/request/sipModel';
+import { response } from 'src/model/response/responseModel';
 import { environment } from '../../environment';
 
 @Injectable({

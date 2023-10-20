@@ -15,7 +15,7 @@ export class LoginComponent {
 
   OtpPopup: boolean = false;
   resume : boolean = false;
-  authenticated: String = '';
+  authenticated: boolean = false;
   loginForm: any;
   otpForm: any;
   resumeForm : any;
@@ -43,7 +43,7 @@ export class LoginComponent {
 
   loginSubmit() {
     this.loginService.loginUsers(this.loginForm.value).subscribe(resp => {
-      console.log(resp.success);
+      console.log(resp);
       if (resp.success) {
         this.OtpPopup = true;
       }
@@ -70,7 +70,7 @@ export class LoginComponent {
       console.log(resp);
 
       if (resp.success) {
-        this.authenticated = 'true'
+        this.authenticated = true
         localStorage.setItem('authenticated', 'true')
         this._sharedService.emitChange(this.authenticated);
         this.router.navigateByUrl('/registration');
@@ -111,7 +111,16 @@ export class LoginComponent {
   }
   resumeSubmit()
   {
-
+    console.log(this.resumeForm.value.panNumber);
+    
+    this.loginService.resume(this.resumeForm.value.panNumber).subscribe(resp => {
+      localStorage.setItem('webToken', '12345');
+      this.authenticated = true
+      localStorage.setItem('authenticated', 'true')
+      this._sharedService.emitChange(this.authenticated);
+      localStorage.setItem('RefNumber','test');
+      this.router.navigateByUrl('/registration');
+    })
   }
   resumeCancel()
   {

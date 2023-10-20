@@ -10,13 +10,15 @@ import { Basketdetails, SIPBasket, StockList } from 'src/model/request/sipModel'
 export class ProductComponent implements OnInit {
 
   SIPBucket: Basketdetails[] = [];
+  ProductBucket : SIPBasket = new SIPBasket();
+  ProductBasket : Basketdetails[] = [];
   StockBucket: any[] = [];
   NoOfMonth: any[] = [];
   selectedMonth: any;
   termsandcondition: boolean = false;
   getBasketId : any;
   PostRequest : SIPBasket = new SIPBasket();
-  Basketdetails: Basketdetails = new Basketdetails();
+  Basketdetails: Basketdetails = new Basketdetails;
   StockList: StockList = new StockList();
   popUp: boolean = false
   constructor(private SipService: SipService) { }
@@ -24,20 +26,14 @@ export class ProductComponent implements OnInit {
   getSIP(): void {
     this.SipService.getAll()
       .subscribe(resp => {
-        for (let i = 0; i < resp.response.data.length; i++) {
-          this.Basketdetails = {
-            Base_Value: resp.response.data[i].Base_Value,
-            Basket_name: resp.response.data[i].Basket_name,
-            ID: resp.response.data[i].ID,
-            Nudgeline1: resp.response.data[i].Nudgeline1,
-            Nudgeline2: resp.response.data[i].Nudgeline2,
-            Onelinertext: resp.response.data[i].Onelinertext,
-            StockList: this.getStock(resp.response.data[i])
-          }
-          this.SIPBucket.push(this.Basketdetails)
-        }
-        this.NoOfMonth = resp.response.NoOfMonths;
-        this.selectedMonth = resp.response.selectMonth
+        console.log(resp);
+        this.ProductBasket = resp.results;
+        this.ProductBucket.NoOfMonths= resp.NoOfMonths;
+        this.ProductBucket.selectMonth = resp.selectMonth;
+        console.log(this.ProductBasket);
+        
+        this.NoOfMonth = this.ProductBucket.NoOfMonths;
+        this.selectedMonth = this.ProductBucket.selectMonth;
       });
   }
 
@@ -132,7 +128,7 @@ export class ProductComponent implements OnInit {
       success : true,
       selectMonth : this.selectedMonth,
       NoOfMonths : null,
-      data : this.SIPBucket.filter(x =>  { return x.ID === this.getBasketId && x.StockList.filter(y => y.Basket_id === this.getBasketId) }),
+      Basketdetails : this.SIPBucket.filter(x =>  { return x.ID === this.getBasketId && x.StockList.filter(y => y.Basket_id === this.getBasketId) }),
       successMessage : "Going to Invest"
     }
     console.log(this.PostRequest);

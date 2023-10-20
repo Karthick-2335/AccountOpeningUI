@@ -6,7 +6,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   const token = !!localStorage.getItem('webToken');
   const router = inject(Router);
 
+  console.log(token);
   if (token) {
+    
     return true;
   }
   else {

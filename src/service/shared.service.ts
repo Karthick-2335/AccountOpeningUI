@@ -16,8 +16,7 @@ export class SharedService {
 
 
   emitChange(change: any) {
-   let value = localStorage.setItem('authenticated',change)
-      this.emitChangeSource.next(value);
+      this.emitChangeSource.next(change);
   }
   stageChange(stage : string) {
     localStorage.setItem('activeStage',stage)

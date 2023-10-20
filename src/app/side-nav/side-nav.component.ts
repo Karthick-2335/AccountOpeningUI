@@ -17,9 +17,11 @@ export class SideNavComponent implements OnInit {
   bank: boolean = false;
   product: boolean = false;
   document: boolean = false;
-
-  constructor(private _sharedService: SharedService, private router: Router) {
+  disable : boolean = true;
+  constructor(private _sharedService: SharedService, private router: Router) 
+  {
     _sharedService.changeEmitted$.subscribe(text => {
+      this.login = text
       if (!!sessionStorage.getItem('authenticated')) {
         this.login = true;
       }
@@ -28,27 +30,9 @@ export class SideNavComponent implements OnInit {
       }
     });
     _sharedService.stageEmitted$.subscribe(stage => {
-      console.log(stage);
-      
-      switch (stage === '' ? sessionStorage.getItem('activeStage') : stage) 
-      {
-        case "Registration":
-          this.navigateToProfile();
-        break;
-        case "Profile":
-          this.navigateToBank();
-        break;
-        case "Bank":
-          this.navigateToProduct();
-        break;
-        case "Product":
-          this.navigateToDocument();
-        break;
-        default:
-          this.navigateToRegistration();
-      }
-
+      this.currentStage(stage);
     });
+    this.currentStage(localStorage.getItem('activeStage')?.toString() || '');
     if (!!localStorage.getItem('RefNumber'))
       this.referenceNumber = localStorage.getItem('RefNumber') || '';
   }
@@ -105,5 +89,23 @@ export class SideNavComponent implements OnInit {
     this.product = false;
     this.document = true;
     this.router.navigateByUrl('/document');
+  }
+  currentStage(stage: string) {
+    switch (stage) {
+      case "Registration":
+        this.navigateToProfile();
+        break;
+      case "Profile":
+        this.navigateToBank();
+        break;
+      case "Bank":
+        this.navigateToProduct();
+        break;
+      case "Product":
+        this.navigateToDocument();
+        break;
+      default:
+        this.navigateToRegistration();
+    }
   }
 }

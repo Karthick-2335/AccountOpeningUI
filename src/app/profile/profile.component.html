@@ -10,17 +10,11 @@
                 <!-- Actions -->
                 <div class="col-sm-6 col-12 text-sm-end">
                     <div class="mx-n1">
-                        <a href="#" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
+                        <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
                             <span class=" pe-2">
                                 <i class="bi bi-pencil"></i>
                             </span>
                             <span>Edit</span>
-                        </a>
-                        <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
-                            <span class=" pe-2">
-                                <i class="bi bi-plus"></i>
-                            </span>
-                            <span>Create</span>
                         </a>
                     </div>
                 </div>
@@ -34,33 +28,30 @@
 </header>
 <!-- Main -->
 <main class="py-6 bg-surface-secondary">
-    <div class="container-fluid">
+    <div>
         <div class="card shadow border-0 mb-7">
             <div class="card-header">
-                <form>
+                <form [formGroup]="profileForm" autocomplete="off">
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Title</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected></option>
-                                    <option value="1">Mr</option>
-                                    <option value="2">Mrs</option>
-                                    <option value="3">Miss</option>
-                                    <option value="4">Dr</option>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    formControlName="title">
+                                    <option *ngFor="let salu of salute" value="{{salu}}">{{salu}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Name</label>
-                                <input type="text" id="form1Example1" class="form-control" />
+                                <input type="text" id="form1Example1" class="form-control" formControlName="name" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Email</label>
-                                <input type="text" id="form1Example1" class="form-control" />
+                                <input type="text" id="form1Example1" class="form-control" formControlName="email" />
                             </div>
                         </div>
                     </div>
@@ -68,17 +59,16 @@
                         <div class="col-sm-5">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Mobile Number</label>
-                                <input type="text" id="form1Example1" class="form-control" />
+                                <input type="text" id="form1Example1" class="form-control"
+                                    formControlName="mobileNumber" />
                             </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Maritial Status</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>Maritial Status</option>
-                                    <option value="1">Single</option>
-                                    <option value="2">Married</option>
-                                    <option value="3">Widow</option>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    formControlName="martialStatus">
+                                    <option *ngFor="let status of martial" value="{{status}}">{{status}}</option>
                                 </select>
                             </div>
                         </div>
@@ -87,18 +77,16 @@
                         <div class="col-sm-5">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Father's Name</label>
-                                <input type="text" id="form1Example1" class="form-control" />
+                                <input type="text" id="form1Example1" class="form-control"
+                                    formControlName="fatherName" />
                             </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Occupation</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>Occupation</option>
-                                    <option value="1">Private</option>
-                                    <option value="2">Government</option>
-                                    <option value="3">Agriculture</option>
-                                    <option value="4">Industrial</option>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    formControlName="occupation">
+                                    <option *ngFor="let work of sector" value="{{work}}">{{work}}</option>
                                 </select>
                             </div>
                         </div>
@@ -107,24 +95,18 @@
                         <div class="col-sm-5">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Annual Income</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>Annula Income</option>
-                                    <option value="1">1-5</option>
-                                    <option value="2">5-10</option>
-                                    <option value="3">10-50</option>
-                                    <option value="4">50-1CR</option>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    formControlName="annualIncome">
+                                    <option *ngFor="let annual of income" value="{{annual}}">{{annual}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Trading Experience</label>
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>Trading Experience</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                    <option value="4">Four and Above</option>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                    formControlName="tradingExperience">
+                                    <option *ngFor="let exp of experience" value="{{exp}}">{{exp}}</option>
                                 </select>
                             </div>
                         </div>
@@ -147,18 +129,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="nomineeDetails" *ngIf="nominee">
+                    <div class="nomineeDetails" *ngIf="nominee" formGroupName="nominee">
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Nominee FirstName</label>
-                                    <input type="text" id="form1Example1" class="form-control" />
+                                    <input type="text" id="form1Example1" class="form-control"
+                                        formControlName="nomineeFirstName" />
                                 </div>
                             </div>
                             <div class="col-sm-5">
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Nominee LastName</label>
-                                    <input type="text" id="form1Example1" class="form-control" />
+                                    <input type="text" id="form1Example1" class="form-control"
+                                        formControlName="nomineeLastName" />
                                 </div>
                             </div>
                         </div>
@@ -166,20 +150,17 @@
                             <div class="col-sm-5">
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Date of Birth</label>
-                                    <input type="text" id="form1Example1" class="form-control" />
+                                    <input type="text" id="form1Example1" class="form-control"
+                                        formControlName="nomineeDateOfBirth" />
                                 </div>
                             </div>
                             <div class="col-sm-5">
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Nominee realationship with
                                         Client</label>
-                                    <select class="form-select form-select-lg mb-3"
-                                        aria-label=".form-select-lg example">
-                                        <option selected>Relationship</option>
-                                        <option value="1">Mother</option>
-                                        <option value="2">Father</option>
-                                        <option value="3">Spouse</option>
-                                        <option value="4">Children</option>
+                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                        formControlName="nomineeRelationShip">
+                                        <option *ngFor="let rel of relations" value="{{rel}}">{{rel}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -188,25 +169,22 @@
                             <div class="col-sm-5">
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Id Proof</label>
-                                    <select class="form-select form-select-lg mb-3"
-                                        aria-label=".form-select-lg example">
-                                        <option selected>ID Proof</option>
-                                        <option value="1">Aadhaar</option>
-                                        <option value="2">Voter ID</option>
-                                        <option value="3">Driving License</option>
-                                        <option value="4">Passport</option>
+                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                        formControlName="nomineeIdProof">
+                                        <option *ngFor="let doc of documents" value="{{doc}}">{{doc}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-5">
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="form1Example1">Id Proof Number</label>
-                                    <input type="text" id="form1Example1" class="form-control" />
+                                    <input type="text" id="form1Example1" class="form-control"
+                                        formControlName="nomineeIdProofNumber" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary mt-5">Proceed</button>
+                    <button class="btn btn-primary mt-5" (click)="profileSubmit()">Proceed</button>
                 </form>
             </div>
         </div>
