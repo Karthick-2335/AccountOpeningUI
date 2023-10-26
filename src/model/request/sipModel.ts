@@ -5,8 +5,11 @@ export class response
 
 export class SIPBasket
 {
+  constructor(){
+    this.Basketdetails = new Basketdetails();
+  }
   success:any; 
-  Basketdetails: Basketdetails[] = []
+  Basketdetails: Basketdetails;
   NoOfMonths : any;
   selectMonth : any;
   successMessage : any;

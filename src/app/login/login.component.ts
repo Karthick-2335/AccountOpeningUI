@@ -50,11 +50,12 @@ export class LoginComponent {
       else {
         this.OtpPopup = false;
         Swal.fire({
-          title: 'Error!',
-          text: resp.errorMessage,
+          position: 'top-end',
           icon: 'error',
-          confirmButtonText: 'Okay'
-        });
+          title: resp.errorMessage,
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.loginForm.reset();
       }
     });
@@ -80,11 +81,12 @@ export class LoginComponent {
       else {
         this.OtpPopup = false;
         Swal.fire({
-          title: 'Error!',
-          text: resp.errorMessage,
+          position: 'top-end',
           icon: 'error',
-          confirmButtonText: 'Okay'
-        });
+          title: resp.errorMessage,
+          showConfirmButton: false,
+          timer: 2500
+        })
         this.otpForm.reset();
         this.OtpPopup = true;
       }

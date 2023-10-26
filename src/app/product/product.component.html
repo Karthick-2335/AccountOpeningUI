@@ -33,7 +33,7 @@
       <div class="card-header">
         <div id="body">
           <form>
-            <div class="row sip-content">
+            <div class="row sip-content" style="line-height: 2;">
               <div class="col-sm-12">
                 <div class="row">
                   <div class="col-sm-4">
@@ -47,7 +47,7 @@
                   </div>
                 </div>
                 <div class="checkBoxList d-flex">
-                  No.Of Months :
+                  No.Of Months 
                   <div class="form-check" *ngFor="let month of NoOfMonth">
                     <input class="form-check-input" type="radio" name="flexRadioDefault1" value="{{month}}"
                       (change)="onRadioChange($event)" [checked]="month === selectedMonth">
@@ -59,13 +59,13 @@
               </div>
             </div>
             <div class="row mt-4">
-              <div class="col-sm-12" *ngFor="let SIP of SIPBucket">
+              <div class="col-sm-12" *ngFor="let SIP of ProductBasket let i = index">
                 <div class="card" (click)="cardClick(SIP.ID)">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-sm-9">
                         <input type="text" value="{{SIP.ID}}" hidden>
-                        <h3 class="card-title"><b>{{SIP.Base_Value}}</b></h3>
+                        <h3 class="card-title"><b>{{SIP.Basket_name}}</b></h3>
                         <p class="card-text mt-4">{{SIP.Onelinertext}}</p>
                         <div class="imageCollection d-flex align-items-center">
                           Stock Invested :
@@ -74,7 +74,7 @@
                       </div>
                       <div class="col-sm-3 text-center">
                         <h6 class="colorTag"><b>{{SIP.Nudgeline1}}</b></h6>
-                        <h3 class="p-3"><b>{{SIP.Base_Value}}</b></h3>
+                        <h3 class="p-3"><b>{{SIP.Base_Value | currency}}</b></h3>
                         <p>{{SIP.Nudgeline2}}</p>
                       </div>
                     </div>
@@ -84,6 +84,7 @@
             </div>
             <div class="SIPStock" *ngIf="popUp">
               <div class="card" *ngFor="let Stock of StockBucket">
+                
                 <div class="card-header">
                   <div class="cardTop">
                     <div class="cardHeader d-flex justify-content-between">
@@ -103,6 +104,7 @@
                       amount or customize Quatintiy in any stock as you like</p>
                   </div>
                 </div>
+                <div class="card-content">
                 <div class="card-body">
                   <table class="table table-responsive">
                     <thead>
@@ -116,7 +118,7 @@
                     </thead>
                     <tbody *ngFor="let stockBunch of Stock.StockList">
                       <tr>
-                        <td><img [src]="stockBunch.Imagepath" alt="" width="50"><span>{{stockBunch.stockName}}</span>
+                        <td><img [src]="stockBunch.Imagepath" alt="" width="50">&nbsp;<span>{{stockBunch.stockName}}</span>
                         </td>
                         <td>
                           <div class="stockValue d-flex justify-content-between">
@@ -144,6 +146,7 @@
                     </tbody>
                   </table>
                 </div>
+              </div>
                 <div class="card-footer">
                   <p>*Prices are as of 15 minutes ago and your basket amount will be as per preices when your orders a
                     sent to

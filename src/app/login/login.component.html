@@ -73,10 +73,12 @@
 							maxlength="4">
 
 						<hr class="mt-4">
+						<div class="button-group">
 						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
 							(click)="otpValidation()">Verify</button>
 						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
 							(click)="OtpCancel()">Cancel</button>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -93,16 +95,17 @@
 						Resume Application
 					</div>
 					<form [formGroup]="resumeForm"  autocomplete="off" class="mt-5">
-						<div class="input">
-							<input type="text" class="input-field text-uppercase text-center" name="panNumber" formControlName="panNumber" maxlength="10" />
-							<label class="input-label">PanNumber</label>
+						<div class="form-outline mb-4">
+							<input type="text" class="form-control text-uppercase" name="panNumber" formControlName="panNumber" maxlength="10" placeholder="Pan Number"/>
 						</div>
 
 						<hr class="mt-4">
+						<div class="button-group">
 						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
 							(click)="resumeSubmit()">Submit</button>
 						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
 							(click)="resumeCancel()">Cancel</button>
+						</div>
 					</form>
 				</div>
 			</div>

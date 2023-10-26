@@ -15,9 +15,11 @@
 }
 
 .colorTag {
-    background-color: red;
-    padding: 10px;
-    text-align: center;
+    background-image:url('./../../assets/Images/lable_g.svg');
+    background-repeat: no-repeat;
+    width: 100%;
+    background-size: 320px;
+    padding: 14px;
     color: white;
 }
 
@@ -48,13 +50,19 @@
 }
 
 .SIPStock {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 55%;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    box-sizing:border-box;
+    width:40%;
+    max-width:calc(100% - 80px);
+    max-height:calc(100% - 80px);
 }
-
+.SIPStock .card-content {
+    overflow:auto;
+    max-height:calc(50vh - 125px);
+  }
 tr {
     vertical-align: initial;
 }

@@ -9,9 +9,8 @@ import { Basketdetails, SIPBasket, StockList } from 'src/model/request/sipModel'
 })
 export class ProductComponent implements OnInit {
 
-  SIPBucket: Basketdetails[] = [];
   ProductBucket : SIPBasket = new SIPBasket();
-  ProductBasket : Basketdetails[] = [];
+  ProductBasket : any;
   StockBucket: any[] = [];
   NoOfMonth: any[] = [];
   selectedMonth: any;
@@ -26,14 +25,11 @@ export class ProductComponent implements OnInit {
   getSIP(): void {
     this.SipService.getAll()
       .subscribe(resp => {
-        console.log(resp);
-        this.ProductBasket = resp.results;
-        this.ProductBucket.NoOfMonths= resp.NoOfMonths;
-        this.ProductBucket.selectMonth = resp.selectMonth;
-        console.log(this.ProductBasket);
-        
+        this.ProductBucket = resp.results;
+        this.ProductBasket = this.ProductBucket.Basketdetails;
         this.NoOfMonth = this.ProductBucket.NoOfMonths;
         this.selectedMonth = this.ProductBucket.selectMonth;
+        console.log(this.ProductBucket.Basketdetails);
       });
   }
 
@@ -41,31 +37,11 @@ export class ProductComponent implements OnInit {
     this.getSIP();
   }
 
-  getStock(arr : any) {
-    let StockArray = [];
-    for (let j = 0; j < arr.StockList.length; j++) {
-      if (arr.Basketdetails.ID === arr.StockList[j].Basket_id) {
-        this.StockList = {
-          Basket_id: arr.StockList[j].Basket_id,
-          scripid: arr.StockList[j].scripid,
-          stockName: arr.StockList[j].stockName,
-          qty: arr.StockList[j].qty,
-          price: arr.StockList[j].price,
-          Imagepath: arr.StockList[j].Imagepath,
-          totalPrice: arr.StockList[j].qty * arr.StockList[j].price,
-          OriginalQty: arr.StockList[j].OriginalQty
-        }
-        StockArray.push(this.StockList);
-      }
-    }
-    return StockArray
-  }
-
   cardClick(id : number) {
     this.getBasketId = id;
     this.StockBucket = [];
     this.popUp = true;
-    const stk = this.SIPBucket.filter(x => { return x.ID === id });
+    const stk = this.ProductBasket.filter((x: { ID: number; }) => { return x.ID === id });
     this.StockBucket.push(stk[0]);
   }
   close() {
@@ -74,8 +50,10 @@ export class ProductComponent implements OnInit {
   }
   async eachStockPlus(StockId : number, id : number) {
     let basevalue = 0;
-    const terminal = this.SIPBucket.filter(x => { return x.ID === id });
-    terminal[0].StockList.forEach((element, index) => {
+    const terminal = this.ProductBasket.filter((x: { ID: number; }) => { return x.ID === id });
+    console.log(terminal);
+
+    terminal[0].StockList.forEach((element : any, index : any) => {
       if (element.scripid === StockId) {
         element.qty++;
         element.totalPrice = (parseFloat(element.price) * element.qty).toFixed(1);
@@ -87,8 +65,10 @@ export class ProductComponent implements OnInit {
   }
   eachStockMinus(StockId : number, id : number) {
     let basevalue = 0;
-    const terminal = this.SIPBucket.filter(x => { return x.ID === id });
-    terminal[0].StockList.forEach((element, index) => {
+    const terminal = this.ProductBasket.filter((x: { ID: number; }) => { return x.ID === id });
+    console.log(terminal);
+    
+    terminal[0].StockList.forEach((element : any, index: any) => {
       if (element.scripid === StockId && element.qty > element.OriginalQty) {
         Math.floor(element.qty--);
         element.totalPrice = (parseFloat(element.price) * element.qty).toFixed(1);
@@ -100,8 +80,8 @@ export class ProductComponent implements OnInit {
   }
   allStockPlus(BasketId : number) {
     let basevalue = 0;
-    const terminal = this.SIPBucket.filter(x => { return x.ID === BasketId });
-    terminal[0].StockList.forEach((element, index) => {
+    const terminal = this.ProductBasket.filter((x: { ID: number; }) => { return x.ID === BasketId });
+    terminal[0].StockList.forEach((element: { qty: number; totalPrice: string; price: string; }, index: any) => {
       element.qty = element.qty * 2
       element.totalPrice = (parseFloat(element.price) * element.qty).toFixed(1);
       basevalue -= parseFloat(element.totalPrice);
@@ -110,8 +90,8 @@ export class ProductComponent implements OnInit {
   }
   allStockMinus(BasketId : number) {
     let basevalue = 0;
-    const terminal = this.SIPBucket.filter(x => { return x.ID === BasketId });
-    terminal[0].StockList.forEach((element, index) => {
+    const terminal = this.ProductBasket.filter((x: { ID: number; }) => { return x.ID === BasketId });
+    terminal[0].StockList.forEach((element: { qty: number; OriginalQty: number; totalPrice: string; price: string; }, index: any) => {
       if (element.qty / 2 > element.OriginalQty) {
         element.qty = Math.floor(element.qty / 2)
         element.totalPrice = (parseFloat(element.price) * element.qty).toFixed(1);
@@ -128,7 +108,7 @@ export class ProductComponent implements OnInit {
       success : true,
       selectMonth : this.selectedMonth,
       NoOfMonths : null,
-      Basketdetails : this.SIPBucket.filter(x =>  { return x.ID === this.getBasketId && x.StockList.filter(y => y.Basket_id === this.getBasketId) }),
+      Basketdetails : this.ProductBasket.filter((x: { ID: any; StockList: any[]; }) =>  { return x.ID === this.getBasketId && x.StockList.filter((y: { Basket_id: any; }) => y.Basket_id === this.getBasketId) }),
       successMessage : "Going to Invest"
     }
     console.log(this.PostRequest);
