@@ -105,12 +105,10 @@ export class ProductComponent implements OnInit {
   }
   investNow() {
     this.PostRequest = {
-      success : true,
       selectMonth : this.selectedMonth,
-      NoOfMonths : null,
       Basketdetails : this.ProductBasket.filter((x: { ID: any; StockList: any[]; }) =>  { return x.ID === this.getBasketId && x.StockList.filter((y: { Basket_id: any; }) => y.Basket_id === this.getBasketId) }),
-      successMessage : "Going to Invest"
-    }
+      referenceNumber : localStorage.getItem('RefNumber')
+    } as any
     console.log(this.PostRequest);
     this.SipService.postSip(this.PostRequest)
     .subscribe(resp => {

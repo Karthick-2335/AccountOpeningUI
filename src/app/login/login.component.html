@@ -1,5 +1,8 @@
 <div>
 	<!-- code here -->
+	<div class="spinner-grow text-primary" role="status">
+		<span class="visually-hidden">Loading...</span>
+	  </div>
 	<div class="card">
 		<div class="card-image">
 			<h2 class="card-heading">
@@ -9,7 +12,7 @@
 		</div>
 		<form class="card-form" [formGroup]="loginForm" autocomplete="off">
 			<div class="resumeApplication text-end">
-				<a class="btn-primary resume" (click)="resumePopup()">Resume Application</a>
+				<a class="btn-primary resume" data-bs-toggle="modal" data-bs-target="#resume">Resume Application</a>
 			</div>
 			<div class="input">
 				<input type="text" class="input-field" name="fullName" formControlName="fullName" />
@@ -50,7 +53,7 @@
 				</div>
 			</div>
 			<div class="action">
-				<button class="action-button" (click)="loginSubmit()" [disabled]="OtpPopup || loginForm.invalid">Get
+				<button class="action-button" (click)= "loginSubmit()" [disabled]="loginForm.invalid">Get
 					started</button>
 			</div>
 		</form>
@@ -59,8 +62,31 @@
 		</div>
 	</div>
 </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="resume" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Resume Application</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<form [formGroup]="resumeForm"  autocomplete="off" class="mt-5">
+				<div class="form-outline mb-4">
+					<input type="text" class="form-control text-uppercase" name="panNumber" formControlName="panNumber" maxlength="10" placeholder="Pan Number"/>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="resumeSubmit()">Submit</button>
+		</div>
+	  </div>
+	</div>
+  </div>
 
-<div id="modal" *ngIf="OtpPopup">
+  <div id="modal" *ngIf="OtpPopup">
 	<div class="row justify-content-md-center">
 		<div class="col-md-4 text-center">
 			<div class="row">
@@ -78,33 +104,6 @@
 							(click)="otpValidation()">Verify</button>
 						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
 							(click)="OtpCancel()">Cancel</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div id="modal" *ngIf="resume">
-	<div class="row justify-content-md-center">
-		<div class="col-md-4 text-center">
-			<div class="row">
-				<div class="col-sm-12 mt-5 bgWhite">
-					<div class="title">
-						Resume Application
-					</div>
-					<form [formGroup]="resumeForm"  autocomplete="off" class="mt-5">
-						<div class="form-outline mb-4">
-							<input type="text" class="form-control text-uppercase" name="panNumber" formControlName="panNumber" maxlength="10" placeholder="Pan Number"/>
-						</div>
-
-						<hr class="mt-4">
-						<div class="button-group">
-						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
-							(click)="resumeSubmit()">Submit</button>
-						<button class='btn btn-primary btn-block mt-4 mb-4 customBtn'
-							(click)="resumeCancel()">Cancel</button>
 						</div>
 					</form>
 				</div>

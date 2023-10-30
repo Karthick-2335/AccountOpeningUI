@@ -63,7 +63,7 @@
                 <div class="card" (click)="cardClick(SIP.ID)">
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-sm-9">
+                      <div class="col-sm-9 card-banner">
                         <input type="text" value="{{SIP.ID}}" hidden>
                         <h3 class="card-title"><b>{{SIP.Basket_name}}</b></h3>
                         <p class="card-text mt-4">{{SIP.Onelinertext}}</p>
@@ -74,8 +74,8 @@
                       </div>
                       <div class="col-sm-3 text-center">
                         <h6 class="colorTag"><b>{{SIP.Nudgeline1}}</b></h6>
-                        <h3 class="p-3"><b>{{SIP.Base_Value | currency}}</b></h3>
-                        <p>{{SIP.Nudgeline2}}</p>
+                        <h3 class="p-3 basevalue"><b>{{SIP.Base_Value | currency}}</b></h3>
+                        <p class="Nudgeline2">{{SIP.Nudgeline2}}</p>
                       </div>
                     </div>
                   </div>

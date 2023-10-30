@@ -37,22 +37,22 @@ id="navbarVertical" *ngIf="login">
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="navigateToProfile()"  [ngClass]="{'activeLink' : profile}">
+                <a class="nav-link" (click)="navigateToProfile()"  [ngClass]="{'activeLink' : profile}" [ngStyle]="{'pointer-events': profileDisable ? 'auto' : 'none'}">
                     <i class="bi bi-bar-chart"></i> Profile
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="navigateToBank()"  [ngClass]="{'activeLink' : bank}">
+                <a class="nav-link" (click)="navigateToBank()"  [ngClass]="{'activeLink' : bank}" [ngStyle]="{'pointer-events': bankDisable ? 'auto' : 'none'}">
                     <i class="bi bi-chat"></i> Bank
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="navigateToProduct()"  [ngClass]="{'activeLink' : product}">
+                <a class="nav-link" (click)="navigateToProduct()"  [ngClass]="{'activeLink' : product}" [ngStyle]="{'pointer-events': productDisable ? 'auto' : 'none'}">
                     <i class="bi bi-bookmarks"></i> Prouct
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="navigateToDocument()" [ngClass]="{'activeLink' : document}">
+                <a class="nav-link" (click)="navigateToDocument()" [ngClass]="{'activeLink' : document}" [ngStyle]="{'pointer-events': documentDisable ? 'auto' : 'none'}">
                     <i class="bi bi-people"></i> Document
                 </a>
             </li>
@@ -76,6 +76,6 @@ id="navbarVertical" *ngIf="login">
 </div>
 </nav>
 <div class="h-screen flex-grow-1 overflow-y-lg-auto">
-    <router-outlet></router-outlet>
+    <router-outlet (newItemEvent)="addItem($event)"></router-outlet>
 </div>
 </div>

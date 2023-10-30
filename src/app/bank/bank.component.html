@@ -10,7 +10,7 @@
                 <!-- Actions -->
                 <div class="col-sm-6 col-12 text-sm-end">
                     <div class="mx-n1">
-                        <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                        <a  class="btn d-inline-flex btn-sm btn-primary mx-1" (click)="edit()">
                             <span class=" pe-2">
                                 <i class="bi bi-pencil"></i>
                             </span>
@@ -67,6 +67,10 @@
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form1Example1">Confirm Account Number</label>
                                 <input type="text" id="form1Example1" class="form-control" formControlName="confirmAccountNumber">
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="confirmAccountNumber.touched && confirmAccountNumber.invalid">
+                                <div *ngIf="confirmAccountNumber.errors?.required">The Accountnumber is required</div>
+                                <div *ngIf="confirmAccountNumber.errors?.confirmedValidator">Accountnumber should be same</div>
                             </div>
                         </div>
                     </div>

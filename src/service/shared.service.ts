@@ -10,9 +10,12 @@ export class SharedService {
 
   private emitChangeSource = new Subject<any>();
   private stageActive = new Subject<string>();
+  private refNochange = new Subject<string>();
 
   changeEmitted$ = this.emitChangeSource.asObservable();
   stageEmitted$ = this.stageActive.asObservable();
+  refNoEmitted$ = this.refNochange.asObservable();
+
 
 
   emitChange(change: any) {
@@ -21,6 +24,9 @@ export class SharedService {
   stageChange(stage : string) {
     localStorage.setItem('activeStage',stage)
     this.stageActive.next(stage);
+  }
+  refno(ref : string){
+    this.refNochange.next(ref);
   }
 }
 

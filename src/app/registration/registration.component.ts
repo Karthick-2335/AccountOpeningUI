@@ -1,24 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { RegistrationService } from 'src/service/registration.service';
 import { address } from 'src/model/request/registration';
 import { Output, EventEmitter } from '@angular/core';
 import { SharedService } from 'src/service/shared.service';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent {
-
-  states: any[] = ['State'];
-  cities: any[] = ['City'];
-  districts: any[] = ['District'];
+export class RegistrationComponent implements OnInit{
+  states: any[] = [];
+  cities: any[] = [];
+  districts: any[] = [];
   registrationForm: any;
   addressDetails: address[] = [];
   isPincodeEnabled: boolean = true;
-  @Output() newItemEvent = new EventEmitter<boolean>();
   constructor(private _registrationService: RegistrationService, fb: FormBuilder, private _sharedService: SharedService) {
     this.registrationForm = fb.group({
       panNumber: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
@@ -28,7 +28,30 @@ export class RegistrationComponent {
       city: [{ value: '', disabled: this.isPincodeEnabled }, [Validators.required]],
       district: [{ value: '', disabled: this.isPincodeEnabled }, [Validators.required]],
       state: [{ value: '', disabled: this.isPincodeEnabled }, [Validators.required]],
-      pinCode: ['', [Validators.required]]
+      pinCode: [{value : '',disabled : false}, [Validators.required]],
+      referenceNumber : ['',[Validators.required]]
+    })
+  }
+  ngOnInit(): void {
+    const refNo = localStorage.getItem('RefNumber');
+    this._registrationService.getRegistration(refNo || "").subscribe(resp => {
+      if(resp.results[0].panNumber)
+      {
+        this.registrationForm.disable();
+        this.registrationForm.patchValue({
+          panNumber : resp.results[0].panNumber,
+          dateOfBirth : resp.results[0].dateOfBirth,
+          addressLine1 : resp.results[0].addressLine1,
+          addressLine2 : resp.results[0].addressLine2,
+          city : resp.results[0].city,
+          district : resp.results[0].district,
+          state : resp.results[0].state,
+          pinCode : resp.results[0].pinCode,
+        })
+      this.cities.push(resp.results[0].city);
+      this.states.push(resp.results[0].state);
+      this.districts.push(resp.results[0].district)
+      } 
     })
   }
   get panNumber() {
@@ -75,13 +98,38 @@ export class RegistrationComponent {
         return districtArray.indexOf(item) == pos;
       });
     });
+    this.registrationForm.patchValue({
+      city : this.cities,
+      state : this.states,
+      district : this.districts
+    })
     this.registrationForm.get('state').enable();
     this.registrationForm.get('city').enable();
     this.registrationForm.get('district').enable();
 
   }
   registrationSubmit() {
-    this._sharedService.stageChange('Registration');
+    this.registrationForm.patchValue({
+      referenceNumber : localStorage.getItem('RefNumber')
+    })
+    this._registrationService.postRegistration(this.registrationForm.value).subscribe(resp =>{
+      if(resp.success)
+      {
+        this.registrationForm.disable();
+        this._sharedService.stageChange('Registration');
+      }
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: resp.message,
+        showConfirmButton: false,
+        timer: 3000
+      })
+    })
+  }
+  edit()
+  {
+    this.registrationForm.enable();
   }
 
 }

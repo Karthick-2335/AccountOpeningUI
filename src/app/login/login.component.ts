@@ -5,6 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from 'src/service/login.service';
 import { Validation } from 'src/model/request/login';
 import Swal from 'sweetalert2'
+import { RegistrationService } from 'src/service/registration.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,6 @@ import Swal from 'sweetalert2'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
   OtpPopup: boolean = false;
   resume : boolean = false;
   authenticated: boolean = false;
@@ -24,7 +24,7 @@ export class LoginComponent {
   sex: any[] = ['Male', 'Female'];
   validateOtp: Validation = new Validation();
 
-  constructor(private router: Router, private _sharedService: SharedService, fb: FormBuilder, private loginService: LoginService) {
+  constructor(private router: Router, private _sharedService: SharedService, fb: FormBuilder, private loginService: LoginService,private _registrationService : RegistrationService) {
 
     this.loginForm = fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
@@ -46,15 +46,16 @@ export class LoginComponent {
       console.log(resp);
       if (resp.success) {
         this.OtpPopup = true;
+        console.log(resp.success);
+        
       }
       else {
-        this.OtpPopup = false;
         Swal.fire({
           position: 'top-end',
           icon: 'error',
-          title: resp.errorMessage,
+          title: resp.message,
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000
         })
         this.loginForm.reset();
       }
@@ -71,21 +72,44 @@ export class LoginComponent {
       console.log(resp);
 
       if (resp.success) {
-        this.authenticated = true
-        localStorage.setItem('authenticated', 'true')
-        this._sharedService.emitChange(this.authenticated);
-        this.router.navigateByUrl('/registration');
-        localStorage.setItem('webToken', resp.token);
-        localStorage.setItem('RefNumber',resp.referenceNumber);
+        localStorage.setItem('webToken', resp.results.token);
+        const registrationObj = {
+          fullName : this.loginForm.value.fullName,
+          mobile : this.loginForm.value.mobile,
+          email : this.loginForm.value.email,
+          referenceNumber : resp.results.referenceNumber
+        }
+        console.log(registrationObj);
+        
+        this._registrationService.postRegistration(registrationObj).subscribe(respp => {
+          if(respp.success)
+          {
+            this.authenticated = true
+            localStorage.setItem('RefNumber',resp.results.referenceNumber);
+            this._sharedService.refno(resp.results.referenceNumber);
+            this.router.navigateByUrl('/registration');
+          }
+          else
+          {
+            this.OtpPopup = false;
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: resp.message,
+              showConfirmButton: false,
+              timer: 3000
+            })
+          }
+        })
       }
       else {
         this.OtpPopup = false;
         Swal.fire({
           position: 'top-end',
           icon: 'error',
-          title: resp.errorMessage,
+          title: resp.message,
           showConfirmButton: false,
-          timer: 2500
+          timer: 3000
         })
         this.otpForm.reset();
         this.OtpPopup = true;
@@ -116,12 +140,25 @@ export class LoginComponent {
     console.log(this.resumeForm.value.panNumber);
     
     this.loginService.resume(this.resumeForm.value.panNumber).subscribe(resp => {
-      localStorage.setItem('webToken', '12345');
-      this.authenticated = true
-      localStorage.setItem('authenticated', 'true')
-      this._sharedService.emitChange(this.authenticated);
-      localStorage.setItem('RefNumber','test');
-      this.router.navigateByUrl('/registration');
+      if(resp.results != null)
+      {
+        console.log(resp);
+        localStorage.setItem('webToken', resp.results.token);
+        this.authenticated = true
+        localStorage.setItem('RefNumber',resp.results.referenceNumber);
+        this._sharedService.refno(resp.results.referenceNumber)
+        this.router.navigateByUrl('/registration');
+      }
+      else
+      {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: resp.message,
+          showConfirmButton: false,
+          timer: 3000
+        })
+      }
     })
   }
   resumeCancel()

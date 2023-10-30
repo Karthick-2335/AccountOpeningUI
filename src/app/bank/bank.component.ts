@@ -1,20 +1,22 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {  FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { BankService } from 'src/service/bank.service';
 import { getIfscDetails } from 'src/model/request/bank';
 import Swal from 'sweetalert2'
 import { SharedService } from 'src/service/shared.service';
+import { ConfirmedValidator } from 'src/utils/custom-validator';
 
 @Component({
   selector: 'app-bank',
   templateUrl: './bank.component.html',
   styleUrls: ['./bank.component.css']
 })
-export class BankComponent {
+export class BankComponent implements OnInit{
 
   bankType : any[] = ['Savings','Current'];
   bankForm : any;
   ifscDetails : getIfscDetails = new getIfscDetails();
+
   constructor(fb : FormBuilder,private bankSerive : BankService,private _sharedService: SharedService)
   {
     this.bankForm = fb.group({
@@ -22,7 +24,25 @@ export class BankComponent {
       ifscCode : ['',[Validators.required]],
       bankAddress : [{value : '',disabled:true},[Validators.required]],
       accountNumber : ['',[Validators.required]],
-      confirmAccountNumber : ['',[Validators.required]]
+      confirmAccountNumber : ['',[Validators.required]],
+      referenceNumber : ['',[Validators.required]]
+
+    },{validator: ConfirmedValidator('accountNumber','confirmAccountNumber')})
+  }
+  ngOnInit(): void {
+    const refNo = localStorage.getItem('RefNumber');
+    this.bankSerive.getBank(refNo || "").subscribe(resp => {
+      if(resp.success)
+      {
+        this.bankForm.disable();
+        this.bankForm.patchValue({
+          accountType : resp.results[0].accountType,
+          ifscCode : resp.results[0].ifscCode,
+          bankAddress : resp.results[0].bankAddress,
+          accountNumber : resp.results[0].accountNumber,
+          confirmAccountNumber : resp.results[0].accountNumber
+        })
+      }
     })
   }
 
@@ -43,8 +63,23 @@ export class BankComponent {
   }
   bankSubmit()
   {
+    this.bankForm.patchValue({
+      referenceNumber : localStorage.getItem('RefNumber')
+    })
     console.log(this.bankForm.value);
-    this._sharedService.stageChange('Bank');
+    this.bankSerive.postBank(this.bankForm.value).subscribe(resp => {
+      if(resp.success)
+      {
+        this._sharedService.stageChange('Bank');
+      }
+      Swal.fire({
+        position: 'top-end',
+        icon: resp.success ? 'success' : 'error',
+        title: resp.message,
+        showConfirmButton: false,
+        timer: 3000
+      })
+    })
   }
   ifscCodeChange(event : any)
   {
@@ -70,4 +105,9 @@ export class BankComponent {
       }
     });
   }
+  edit()
+  {
+    this.bankForm.enable();
+  }
 }
+

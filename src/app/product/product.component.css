@@ -75,3 +75,52 @@ button {
     width: 200px;
     height: 60px;
 }
+
+@media only screen and (max-width: 600px) {
+    *{
+        font-size: 12px;
+    }
+    .card {
+        height: auto;
+    }
+	.SIPStock {
+		width: 100%;
+        max-width:calc(100% - 20px);
+	}
+    .colorTag{
+        position: absolute;
+        top: 20px;
+        left: 49px;
+        width: auto !important;
+        text-align: left !important;
+        background-size: 400px;
+
+    }
+    .colorTag b{
+        padding: 15px;
+    }   
+    .imageCollection{
+        margin-top: 10px;
+        margin-bottom: 15px;
+        text-wrap: nowrap;
+        overflow: scroll !important;
+    }
+    .card-banner{
+        margin-top: 65px;
+    }
+    .basevalue {
+        text-align: left;
+    }
+    .basevalue b {
+        font-size: 25px !important;
+    }
+    .Nudgeline2 {
+        text-align: left;
+    }
+    .card-title b{
+        font-size: 25px !important;
+    }
+    .card-text {
+        overflow: scroll;
+    }
+  }
