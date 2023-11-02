@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -11,6 +11,10 @@ import { ProductComponent } from './product/product.component';
 import { DocumentComponent } from './document/document.component';
 import { BankComponent } from './bank/bank.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { WebCamComponent } from './web-cam/web-cam.component';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +25,9 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     ProductComponent,
     DocumentComponent,
     BankComponent,
-    SideNavComponent
+    SideNavComponent,
+    SpinnerComponent,
+    WebCamComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,11 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

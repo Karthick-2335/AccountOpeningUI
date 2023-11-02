@@ -1,6 +1,8 @@
 import { Component,OnInit } from '@angular/core';
 import { SipService } from 'src/service/sip.service';
 import { Basketdetails, SIPBasket, StockList } from 'src/model/request/sipModel';
+import Swal from 'sweetalert2';
+import { SharedService } from 'src/service/shared.service';
 
 @Component({
   selector: 'app-product',
@@ -20,14 +22,15 @@ export class ProductComponent implements OnInit {
   Basketdetails: Basketdetails = new Basketdetails;
   StockList: StockList = new StockList();
   popUp: boolean = false
-  constructor(private SipService: SipService) { }
+  constructor(private SipService: SipService,private _sharedService: SharedService) { }
 
   getSIP(): void {
-    this.SipService.getAll()
+    const ref = localStorage.getItem('RefNumber');
+    this.SipService.getAll(ref || "")
       .subscribe(resp => {
         this.ProductBucket = resp.results;
         this.ProductBasket = this.ProductBucket.Basketdetails;
-        this.NoOfMonth = this.ProductBucket.NoOfMonths;
+        this.NoOfMonth = this.ProductBucket.NoOfMonths;        
         this.selectedMonth = this.ProductBucket.selectMonth;
         console.log(this.ProductBucket.Basketdetails);
       });
@@ -104,17 +107,30 @@ export class ProductComponent implements OnInit {
     terminal[0].Base_Value = Math.abs(basevalue).toFixed(1);
   }
   investNow() {
-    this.PostRequest = {
-      selectMonth : this.selectedMonth,
-      Basketdetails : this.ProductBasket.filter((x: { ID: any; StockList: any[]; }) =>  { return x.ID === this.getBasketId && x.StockList.filter((y: { Basket_id: any; }) => y.Basket_id === this.getBasketId) }),
-      referenceNumber : localStorage.getItem('RefNumber')
-    } as any
-    console.log(this.PostRequest);
-    this.SipService.postSip(this.PostRequest)
+    this.Basketdetails = this.ProductBasket.filter((x: { ID: any;  StockList: any[];  }) =>  { return x.ID === this.getBasketId && x.StockList.filter((y: { Basket_id: any; }) => y.Basket_id === this.getBasketId) });
+    this.ProductBasket[0].SelectMonth = this.selectedMonth;
+    this.ProductBasket[0].referenceNumber = localStorage.getItem('RefNumber') || "";
+    console.log(this.Basketdetails);
+    this.SipService.postSip(this.Basketdetails as any)
     .subscribe(resp => {
-      console.log(resp);
+      if(resp.success)
+      {
+        this.popUp = false;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: resp.message,
+          showConfirmButton: false,
+          timer: 3000
+        })
+        this._sharedService.stageChange('Product');
+      }
       
     });
+  }
+  productSubmit()
+  {
+    this._sharedService.stageChange('Product');
   }
   onRadioChange(event: any) {
     this.selectedMonth = event.target.value;

@@ -23,6 +23,8 @@ export class Basketdetails
   Nudgeline1 : string = '';
   Nudgeline2 : string = '';
   Onelinertext : string = '';
+  SelectMonth : number = 0;
+  referenceNumber : string = '';
   StockList : StockList[] = [];
 }
 
